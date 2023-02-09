@@ -17,7 +17,7 @@ i. Google Chrome with Metamask
 
 8. Github Desktop
 
-# Installation (Youtube: https://www.youtube.com/watch?v=1NuScL3KPKQ&list=PLabxW4FrEKtqly4olEaLhT2P-4enaHh-9)
+# Installation
 0. Make sure you meet the prerequisites
 1. Use Github Desktop app to clone this repo into your github folder
 
