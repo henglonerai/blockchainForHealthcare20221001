@@ -68,6 +68,9 @@ export class ViewComponent implements OnInit {
     this.progressMsg = ''
     this.loadComplete = false
 
+	  console.log("From view.component.ts, GetDoctors(),  Line 71");
+	  console.log(this.DoctorDetails);
+
     if (this.DoctorDetails.length >= 1) {
       this.showProgressCard = false
       return 0
@@ -75,6 +78,10 @@ export class ViewComponent implements OnInit {
 
     this.doctorService.getDrs().then((docs: any) => {
       this.Doctors = docs
+	  
+	  console.log("From view.component.ts, GetDoctors(), Line 82");
+	  console.log(this.Doctors);
+	  
       if (this.Doctors.length >= 1) {
         this.loadDrDetails();
         this.progressMsg = "Found " + this.Doctors.length + " Accounts"

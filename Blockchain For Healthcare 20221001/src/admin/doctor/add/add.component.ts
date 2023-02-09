@@ -67,7 +67,7 @@ export class AddComponent implements OnInit {
         'Adding Doctor Failed<br> <small class="fw-light text-danger"><b>"</b>' +
         this.model.docID +
         '<b>"</b></small><br>1.not a valid address or <br>2.Already have a role';
-      console.log(er);
+      console.log("Adding Doctor Failed:" + er);
     })
   }
 
