@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { DoctorService } from 'src/admin/services/doctor.service';
+import { PatientService } from 'src/admin/services/patient.service';
 
 @Component({
   selector: 'patient-view',
@@ -14,10 +14,10 @@ export class PatientViewComponent implements OnInit {
     acID: '',
   };
 
-  Doctors: string[] = [];
+  PatientIds: string[] = [];
 
-  Doctor: any = {
-    docID: '',
+  Patient: any = {
+    patID: '',
     fName: 'First Name',
     lName: 'Last Name',
     Doj: '',
@@ -29,7 +29,7 @@ export class PatientViewComponent implements OnInit {
     imageHash: '',
   };
 
-  DoctorDetails: any = [];
+  PatientDetails: any = [];
 
   loaded: boolean = false;
   loadComplete: boolean = false;
@@ -39,48 +39,46 @@ export class PatientViewComponent implements OnInit {
   progressMsg: string = ''
 
 
-  constructor(private doctorService: DoctorService) {
-    this.progressMsg = 'Loading Doctor Accounts From Blockchain'
-
-    this.DoctorDetails = doctorService.DoctorDetails
+  constructor(private patientService: PatientService) {
+    this.progressMsg = 'Loading Patient Accounts From Blockchain'
   }
 
   ngOnInit(): void {
-    this.GetDoctors()
+    this.GetPatientIds()
   }
 
-  loadDrDetails() {
-    console.log(this.Doctors);
-    this.DoctorDetails = []
-    for (var i = 0; i <= this.Doctors.length; i++) {
-      if (this.Doctors[i])
-        this.doctorService.getDoctorDetails(this.Doctors[i]).then((data: any) => {
-          this.DoctorDetails.push(data)
+  loadPatientDetails() {
+    console.log(this.PatientIds);
+    this.PatientDetails = []
+    for (var i = 0; i <= this.PatientIds.length; i++) {
+      if (this.PatientIds[i])
+        this.patientService.getPatientDetails(this.PatientIds[i]).then((data: any) => {
+          this.PatientDetails.push(data)
         });
     }
     this.progressMsg = ''
     this.showProgressCard = false
   }
 
-  GetDoctors(): any {
+  GetPatientIds(): any {
     this.showProgressCard = true;
     this.showProgressWarn = false;
     this.progressMsg = ''
     this.loadComplete = false
 
-    if (this.DoctorDetails.length >= 1) {
+    if (this.PatientDetails.length >= 1) {
       this.showProgressCard = false
       return 0
     }
 
-    this.doctorService.getDrs().then((docs: any) => {
-      this.Doctors = docs
-      if (this.Doctors.length >= 1) {
-        this.loadDrDetails();
-        this.progressMsg = "Found " + this.Doctors.length + " Accounts"
+    this.patientService.getPatientIds().then((patientIds: any) => {
+      this.PatientIds = patientIds
+      if (this.PatientIds.length >= 1) {
+        this.loadPatientDetails();
+        this.progressMsg = "Found " + this.PatientIds.length + " Accounts"
       }
       else {
-        this.progressMsg = 'No Doctors in the Network....'
+        this.progressMsg = 'No Patients in the Network....'
         this.loadComplete = true
         this.showProgressCard = false
       }

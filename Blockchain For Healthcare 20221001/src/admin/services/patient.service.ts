@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
+import { IPFSHTTPClient } from 'ipfs-http-client';
+import { IPFS } from 'src/environments/environment';
 import { BlockchainService } from 'src/services/blockchain.service';
 import { IpfsService } from 'src/services/ipfs.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +14,9 @@ export class PatientService {
   contract: any;
   account: any;
 
-  ipfs: any;
+  ipfs: IPFSHTTPClient;
+
+  PatientIds: string[] = [];
 
   addprogress:boolean = false;
   added:boolean = false
@@ -18,7 +24,8 @@ export class PatientService {
 
   constructor(
     private blockchainService: BlockchainService,
-    private ipfsService: IpfsService
+    private ipfsService: IpfsService,
+    private http: HttpClient
   ) {
     this.web3 = blockchainService.getWeb3();
 
@@ -27,6 +34,46 @@ export class PatientService {
     this.getAcccount();
 
     this.ipfs = ipfsService.getIPFS();
+  }
+
+  getPatientIds(): Promise<any> {
+    return new Promise((resolve) => {
+      this.contract.then((contract: any) => {
+        this.PatientIds = contract.methods.getAllPatientIds()
+          .call()
+          .then((patientIds: any) => {
+            this.PatientIds = patientIds;
+            console.log(this.PatientIds);
+            resolve(this.PatientIds)
+          });
+      })
+
+    })
+  }
+
+  getPatientDetails(patientId: any): Promise<any> {
+    console.log(patientId);
+
+    return new Promise((resolve) => {
+      this.contract.then((contract: any) => {
+        contract.methods
+          .getPatient(patientId)
+          .call()
+          .then((ipfsHash: string) => {
+            console.log(ipfsHash);
+            //this.http.get(IPFS.localIPFSGet + ipfsHash)
+			this.http.get(IPFS.localIPFSGet + ipfsHash, {
+              headers: new HttpHeaders({
+                Authorization: 'Basic ' + btoa( IPFS.userID + ':' + IPFS.key ),
+              }),
+            })
+              .subscribe((data: any) => {
+                console.log(data);
+                resolve(data);
+              });
+          });
+      })
+    })
   }
 
   /*addPatient(pat_id: any, data: any) {
@@ -58,11 +105,11 @@ export class PatientService {
   //addDoctor(docId: string, data: any): Promise<any> {
   addPatient(pat_id: any, data: any) {
     return new Promise((resolve, reject) => {
-      this.blockchainService.getContract().then(c => {
+      this.blockchainService.getContract().then(contract => {
         this.blockchainService.getCurrentAcount().then(a => {
           this.addRecord(data).then(ipfsHash => {
-            this.contract.methods
-              .addPatInfo(pat_id, ipfsHash)
+            contract.methods
+              .addPatientInfo(pat_id, ipfsHash)
               .send({ from: a })
               .on("confirmation", (result: any) => {
                 console.log('result', result);
