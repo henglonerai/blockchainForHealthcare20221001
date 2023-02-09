@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IPFSHTTPClient } from 'ipfs-http-client/dist/src/types';
-import { DoctorService } from 'src/admin/services/doctor.service';
+import { PatientService } from 'src/admin/services/patient.service';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { DoctorService } from 'src/admin/services/doctor.service';
 })
 export class PatientAddComponent implements OnInit {
   model: any = {
-    docID: '',
+    patID: '',
     fName: 'test_name',
     lName: 'test_name',
     Doj: '',
@@ -35,25 +35,25 @@ export class PatientAddComponent implements OnInit {
   IPFShash: string = ''
 
   constructor(
-    private ds: DoctorService
+    private ps: PatientService
   ) {
-    this.ipfs = ds.ipfs
+    this.ipfs = ps.ipfs
   }
 
   ngOnInit(): void {
-    this.ipfs = this.ds.ipfs
+    this.ipfs = this.ps.ipfs
   }
 
-  onAddDocSubmit() {
+  onAddPatientSubmit() {
     this.show = true;
-    this.msg_text = 'Adding Doctor to the Network....';
+    this.msg_text = 'Adding Patient to the Network....';
     this.warn = false;
 
     this.model.imageHash = this.image_url;
 
     let data = this.model;
 
-    this.ds.addDoctor(this.model.docID, data).then((r: any) => {
+    this.ps.addPatient(this.model.patID, data).then((r: any) => {
       this.success = true
       this.msg_text = 'Data added to IPFS...';
       this.msg_text += '<br>User Added to the Blockchain';
@@ -64,8 +64,8 @@ export class PatientAddComponent implements OnInit {
     }).catch((er: any) => {
       this.warn = true
       this.msg_text =
-        'Adding Doctor Failed<br> <small class="fw-light text-danger"><b>"</b>' +
-        this.model.docID +
+        'Adding Patient Failed<br> <small class="fw-light text-danger"><b>"</b>' +
+        this.model.patID +
         '<b>"</b></small><br>1.not a valid address or <br>2.Already have a role';
       console.log(er);
     })

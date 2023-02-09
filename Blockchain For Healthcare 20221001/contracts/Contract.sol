@@ -2,7 +2,6 @@
 pragma solidity >=0.4.21;
 
 import "./Roles.sol";
-//import "../node_modules/hardhat/console.sol"; 
 
 contract Contract {
     using Roles for Roles.Role;
@@ -33,10 +32,10 @@ contract Contract {
 	address msgsender = 0x4c0e13C6F4fB72c97c954f76902d0bE2A2E9b36C;
 
     constructor() {
-        admin_id = msg.sender;
-		
+        admin_id = msg.sender;		
+
 		admin_id = msgsender;
-		
+
         admin.add(admin_id);
     }
 
@@ -57,22 +56,51 @@ contract Contract {
         doctor.add(_newdr);
     }
 
+    function addPatient(address _newdr) public {
+        require(admin.has(msg.sender), "Only For Admin");
+        patient.add(_newdr);
+    }
+
+    // dr_id is not needed here and should not be required during creation
+    // dr_id is an address that should be automatically generated when the dr is first saved
     function addDrInfo(address dr_id, string memory _drInfo_hash) public {
         require(admin.has(msg.sender), "Only For Admin");
 
-        Doctor storage drInfo = Doctors[msg.sender];
+        Doctor storage drInfo = Doctors[dr_id];
         drInfo.drHash = _drInfo_hash;
-        Dr_ids.push(msg.sender);
 
+        // The new address (dr_id) should be pushed into Dr_ids storage to retrieve the doctors back
+        Dr_ids.push(dr_id);
         doctor.add(dr_id);
     }
 
+    function addPatientInfo(address pat_id, string memory _patInfo_hash) public {
+        require(admin.has(msg.sender), "Only For Admin");
+
+        Patient storage patInfo = Patients[pat_id];
+        patInfo.patHash = _patInfo_hash;
+
+        // The new address (dr_id) should be pushed into Dr_ids storage to retrieve the doctors back
+        Patient_ids.push(pat_id);
+        patient.add(pat_id);
+    }
+
     function getAllDrs() public view returns (address[] memory) {
+        // This will return the addresses pointing to the doctors
         return Dr_ids;
+    }
+
+    function getAllPatientIds() public view returns (address[] memory) {
+        // This will return the addresses pointing to the doctors
+        return Patient_ids;
     }
 
     function getDr(address _id) public view returns (string memory) {
         return (Doctors[_id].drHash);
+    }
+
+    function getPatient(address _id) public view returns (string memory) {
+        return (Patients[_id].patHash);
     }
 
     // check is Doctor
