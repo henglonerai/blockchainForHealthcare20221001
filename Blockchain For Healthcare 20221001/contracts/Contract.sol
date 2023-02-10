@@ -9,6 +9,7 @@ contract Contract {
     Roles.Role private admin;
     Roles.Role private doctor;
     Roles.Role private patient;
+    Roles.Role private medRecord;
 
     struct Doctor {
         string drHash;
@@ -17,17 +18,24 @@ contract Contract {
     struct Patient {
         string patHash;
     }
+	
+	struct MedRecord {
+        string mrHash;
+    }
 
     mapping(address => Doctor) Doctors;
     mapping(address => Patient) Patients;
+    mapping(address => MedRecord) MedRecords;
 
     address[] public Dr_ids;
     address[] public Patient_ids;
+    address[] public MedRecord_ids;
 
     address accountId;
     address admin_id;
     address get_patient_id;
     address get_dr_id;
+    address get_mr_id;
 
 	address msgsender = 0x4c0e13C6F4fB72c97c954f76902d0bE2A2E9b36C;
 
@@ -56,9 +64,14 @@ contract Contract {
         doctor.add(_newdr);
     }
 
-    function addPatient(address _newdr) public {
+    function addPatient(address _newps) public {
         require(admin.has(msg.sender), "Only For Admin");
-        patient.add(_newdr);
+        patient.add(_newps);
+    }
+	
+	function addMedRecord(address _newmr) public {
+        require(admin.has(msg.sender), "Only For Admin");
+        medRecord.add(_newmr);
     }
 
     // dr_id is not needed here and should not be required during creation
@@ -84,6 +97,17 @@ contract Contract {
         Patient_ids.push(pat_id);
         patient.add(pat_id);
     }
+	
+	function addMedRecordInfo(address mr_id, string memory _mrInfo_hash) public {
+        require(admin.has(msg.sender), "Only For Admin");
+
+        MedRecord storage mrInfo = MedRecords[mr_id];
+        mrInfo.mrHash = _mrInfo_hash;
+
+        // The new address (dr_id) should be pushed into Dr_ids storage to retrieve the doctors back
+        MedRecord_ids.push(mr_id);
+        medRecord.add(mr_id);
+    }
 
     function getAllDrs() public view returns (address[] memory) {
         // This will return the addresses pointing to the doctors
@@ -91,8 +115,13 @@ contract Contract {
     }
 
     function getAllPatientIds() public view returns (address[] memory) {
-        // This will return the addresses pointing to the doctors
+        // This will return the addresses pointing to the patients
         return Patient_ids;
+    }
+
+	function getAllMedRecordIds() public view returns (address[] memory) {
+        // This will return the addresses pointing to the medical records
+        return MedRecord_ids;
     }
 
     function getDr(address _id) public view returns (string memory) {
@@ -101,6 +130,10 @@ contract Contract {
 
     function getPatient(address _id) public view returns (string memory) {
         return (Patients[_id].patHash);
+    }
+	
+	function getMedRecord(address _id) public view returns (string memory) {
+        return (MedRecords[_id].mrHash);
     }
 
     // check is Doctor
