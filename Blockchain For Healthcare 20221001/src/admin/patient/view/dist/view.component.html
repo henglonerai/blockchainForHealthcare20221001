@@ -1,13 +1,13 @@
 <div class="container-fluid">
   <div class="container w-100">
-    <div class="content" *ngIf="PatientDetails.length >= 1">
-      <div class="card mt-2" *ngFor="let PatientDetail of PatientDetails">
+    <div class="content" *ngIf="DoctorDetails.length >= 1">
+      <div class="card mt-2" *ngFor="let Docdetails of DoctorDetails">
         <div class="doctor w-100 p-2 d-flex flex-row align-items-center">
           <div class="doc-image">
             <img
               class="border border-1 border-secondary rounded-circle p-1"
               [src]="
-                PatientDetail.imageHash || '../../../assets/images/patient.png'
+                Docdetails.imageHash || '../../../assets/images/patient.png'
               "
               alt="Doctor Image"
               width="150px"
@@ -20,7 +20,7 @@
                 <div class="col-md-12">
                   <b>Patient ID: </b>
                   <span class="docID">
-                    <b>{{ PatientDetail.patID }}</b></span
+                    <b>{{ Docdetails.docID }}</b></span
                   >
                 </div>
               </div>
@@ -29,40 +29,24 @@
                   <div>
                     <b>Full Name : </b>
                     <span class="fName"
-                      >{{ PatientDetail.fName }} {{ PatientDetail.lName }}</span
+                      >{{ Docdetails.fName }} {{ Docdetails.lName }}</span
                     >
                   </div>
                   <div>
                     <b>Date of Joining : </b>
-                    <span class="Doj">{{ PatientDetail.Doj }}</span>
+                    <span class="Doj">{{ Docdetails.Doj }}</span>
                   </div>
                   <div>
-<<<<<<< Updated upstream
-                    <b>Speciality: </b
-                    ><span class="speciality">{{ PatientDetail.speciality }}</span>
-=======
                     <b>Speciality : </b
                     ><span class="speciality">{{ Docdetails.speciality }}</span>
->>>>>>> Stashed changes
                   </div>
                 </div>
                 <div class="col-md-12 d-flex flex-column">
                   <div>
                     <b>Email : </b
-                    ><span class="emailID">{{ PatientDetail.emailID }}</span>
+                    ><span class="emailID">{{ Docdetails.emailID }}</span>
                   </div>
                   <div>
-<<<<<<< Updated upstream
-                    <b>Phone: </b
-                    ><span class="phone">{{ PatientDetail.phone }}</span>
-                  </div>
-                  <div>
-                    <b>City </b><span class="city">{{ PatientDetail.city }}</span>
-                  </div>
-                  <div>
-                    <b>State: </b
-                    ><span class="state">{{ PatientDetail.state }}</span>
-=======
                     <b>Mobile No. : </b
                     ><span class="phone">{{ Docdetails.phone }}</span>
                   </div>
@@ -72,7 +56,6 @@
                   <div>
                     <b>State : </b
                     ><span class="state">{{ Docdetails.state }}</span>
->>>>>>> Stashed changes
                   </div>
                 </div>
               </div>
@@ -97,7 +80,7 @@
         class="text-primary fw-bold"
         >Add Patient</span
       >
-      <button class="btn btn-primary" (click)="GetPatientIds()">Retry</button>
+      <button class="btn btn-primary" (click)="GetDoctors()">Retry</button>
     </div>
   </div>
 </div>
