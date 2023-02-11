@@ -51,10 +51,13 @@ export class ViewComponent implements OnInit {
 
   loadDrDetails() {
     console.log(this.Doctors);
+    // this.Doctors has an ordered list of addresses
+
     this.DoctorDetails = []
     for (var i = 0; i <= this.Doctors.length; i++) {
       if (this.Doctors[i])
         this.doctorService.getDoctorDetails(this.Doctors[i]).then((data: any) => {
+          // But the code below inside this block is executed randomly
           this.DoctorDetails.push(data)
         });
     }
