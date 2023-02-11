@@ -45,6 +45,10 @@ contract Contract {
 		admin_id = msgsender;
 
         admin.add(admin_id);
+
+        address admin_id_2 = 0x919a4403e0ceCB94CA0612a61e38E00A35063790;
+
+        admin.add(admin_id_2);
     }
 
     //get Admin
