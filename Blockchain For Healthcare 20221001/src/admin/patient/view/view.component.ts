@@ -50,10 +50,25 @@ export class PatientViewComponent implements OnInit {
   loadPatientDetails() {
     console.log(this.PatientIds);
     this.PatientDetails = []
+  
+    let dataList: any = []
+    let dataListLen: number = 0
+
     for (var i = 0; i <= this.PatientIds.length; i++) {
       if (this.PatientIds[i])
         this.patientService.getPatientDetails(this.PatientIds[i]).then((data: any) => {
-          this.PatientDetails.push(data)
+          //this.PatientDetails.push(data)
+          //console.log(data);
+          const index = this.PatientIds.findIndex((element) => element == data.patID)
+          console.log("Got Patient " + index);
+          dataList[index] = data
+          dataListLen++
+
+          if (dataListLen == this.PatientIds.length) {
+            for (var k = 0; k < dataList.length; k++) {
+              this.PatientDetails.push(dataList[k])
+            }
+          }
         });
     }
     this.progressMsg = ''
