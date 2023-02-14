@@ -59,7 +59,7 @@ export class DoctorService {
   }
 
   getDoctorDetails(docID: any): Promise<any> {
-	 console.log("From doctor.service.ts, Line 62");
+	 //console.log("From doctor.service.ts, Line 62");
     console.log(docID);
 
     return new Promise((resolve) => {
@@ -68,7 +68,7 @@ export class DoctorService {
           .getDr(docID)
           .call()
           .then((ipfsHash: string) => {
-			  console.log("From doctor.service.ts, Line 71");
+			  //console.log("From doctor.service.ts, Line 71");
             console.log(ipfsHash);
             //this.http.get(IPFS.localIPFSGet + ipfsHash)
 			this.http.get(IPFS.localIPFSGet + ipfsHash, {
@@ -77,7 +77,7 @@ export class DoctorService {
               }),
             })
               .subscribe((data: any) => {
-				  console.log("From doctor.service.ts, Line 80");
+				  //console.log("From doctor.service.ts, Line 80");
                 console.log(data);
                 resolve(data);
               });
@@ -87,17 +87,17 @@ export class DoctorService {
   }
 
   addDoctor(docId: string, data: any): Promise<any> {
-	  console.log("From doctor.service.ts, addDoctor(), Line 90");
-	  console.log(docId);
-	  console.log("From doctor.service.ts, addDoctor(), Line 92");
+	  //console.log("From doctor.service.ts, addDoctor(), Line 90");
+	  //console.log(docId);
+	  //console.log("From doctor.service.ts, addDoctor(), Line 92");
     return new Promise((resolve, reject) => {
       this.bs.getContract().then(c => {
         this.bs.getCurrentAcount().then(a => {
           this.addRecord(data).then(ipfsHash => {
-			  console.log("From doctor.service.ts, addDoctor(), Line 96");
-			  console.log(docId);
-			  console.log(ipfsHash);
-			  console.log("From doctor.service.ts, addDoctor(), Line 100");
+			  //console.log("From doctor.service.ts, addDoctor(), Line 96");
+			  //console.log(docId);
+			  //console.log(ipfsHash);
+			  //console.log("From doctor.service.ts, addDoctor(), Line 100");
             c.methods
               .addDrInfo(docId, ipfsHash)
               .send({ from: a })
