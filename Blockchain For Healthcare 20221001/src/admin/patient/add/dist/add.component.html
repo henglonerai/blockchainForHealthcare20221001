@@ -7,11 +7,7 @@
             <img class="image rounded-circle" [src]=" image_url || '../../../assets/images/patient.png'" alt="user"
               width="150px">
             <div class="img-c mb-3 mt-3 col-md-6 d-flex flex-column">
-<<<<<<< Updated upstream
-              <label class="form-label text-center" for="formFile">Select Patient image</label>
-=======
               <label class="form-label text-center" for="formFile">Select image</label>
->>>>>>> Stashed changes
               <input class="img-chooser form-control" type="file" id="formFile" (change)="PreviewImage($event)">
             </div>
           </div>
@@ -35,7 +31,7 @@
         </div>
         <div class="col-12">
           <div class="form-group">
-            <label>Date of Joining<sup class="fas fa-asterisk fw-normal text-danger"
+            <label>Date of Birth<sup class="fas fa-asterisk fw-normal text-danger"
                 style="font-size: 8px;"></sup></label>
             <div class="cal-icon">
               <input [(ngModel)]="model.Doj" name="Doj" id="dob" type="date" class="form-control"
@@ -60,15 +56,9 @@
 
         <div class="col-12">
           <div class="form-group">
-<<<<<<< Updated upstream
-            <label>Patient Id<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <label>Patient ID<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
             <input [(ngModel)]="model.patID" name="patID" id="accid" type="text" class="form-control"
-              placeholder="patient account id" required />
-=======
-            <label>Doctor ID<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
-            <input [(ngModel)]="model.docID" name="docID" id="accid" type="text" class="form-control"
-              placeholder="Doctor's account ID" required />
->>>>>>> Stashed changes
+              placeholder="Patient Account ID" required />
           </div>
         </div>
         <div class="col-12 col-sm-6">
@@ -80,21 +70,21 @@
         </div>
         <div class="col-12 col-sm-6">
           <div class="form-group">
-            <label>State</label>
+            <label>State<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
             <input [(ngModel)]="model.state" name="state" id="state" type="text" class="form-control"
-              placeholder="state" />
+              placeholder="state" required />
           </div>
         </div>
         <div class="col-12 col-sm-6">
           <div class="form-group">
-            <label>Speciality<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
-            <input [(ngModel)]="model.speciality" name="speciality" id="spec" type="text" class="form-control"
-              placeholder="specialties" required />
+            <label>Medical Record<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <input [(ngModel)]="model.records" name="records" id="rec" type="textarea" rows="15" cols="90" class="form-control"
+              placeholder="Enter medical record updates here" required />
           </div>
         </div>
       </div>
       <button type="submit" id="btn" class="btn btn-primary">
-        Add Patient</button>
+        Add New Patient</button>
     </form>
   </div>
   <app-progress_card [success]="success" [show]="show" [msg_text]="msg_text" [warn]="warn" (retry)="onAddPatientSubmit()" (close)="onClose()">
