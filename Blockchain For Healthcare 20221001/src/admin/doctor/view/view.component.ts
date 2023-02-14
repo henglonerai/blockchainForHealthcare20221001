@@ -51,14 +51,31 @@ export class ViewComponent implements OnInit {
 
   loadDrDetails() {
     console.log(this.Doctors);
-    // this.Doctors has an ordered list of addresses
 
     this.DoctorDetails = []
+
+    let dataList: any = []
+    let dataListLen: number = 0
+
     for (var i = 0; i <= this.Doctors.length; i++) {
       if (this.Doctors[i])
         this.doctorService.getDoctorDetails(this.Doctors[i]).then((data: any) => {
-          // But the code below inside this block is executed randomly
-          this.DoctorDetails.push(data)
+          //this.DoctorDetails.push(data)
+
+          // Store the incoming data to dataList with the order same as this.Doctors
+          // Get the index using the docID available in the data
+          const index = this.Doctors.findIndex((element) => element == data.docID)
+          console.log("Got Doctor " + index);
+          dataList[index] = data
+          dataListLen++
+
+          // Detect if the dataList is full
+          if (dataListLen == this.Doctors.length) {
+            // If the dataList is full, print these data in ascending order
+            for (var k = 0; k < dataList.length; k++) {
+              this.DoctorDetails.push(dataList[k])
+            }
+          }
         });
     }
     this.progressMsg = ''
@@ -71,8 +88,8 @@ export class ViewComponent implements OnInit {
     this.progressMsg = ''
     this.loadComplete = false
 
-	  console.log("From view.component.ts, GetDoctors(),  Line 71");
-	  console.log(this.DoctorDetails);
+	  //console.log("From view.component.ts, GetDoctors(),  Line 71");
+	  //console.log(this.DoctorDetails);
 
     if (this.DoctorDetails.length >= 1) {
       this.showProgressCard = false
@@ -82,8 +99,8 @@ export class ViewComponent implements OnInit {
     this.doctorService.getDrs().then((docs: any) => {
       this.Doctors = docs
 	  
-	  console.log("From view.component.ts, GetDoctors(), Line 82");
-	  console.log(this.Doctors);
+	  //console.log("From view.component.ts, GetDoctors(), Line 82");
+	  //console.log(this.Doctors);
 	  
       if (this.Doctors.length >= 1) {
         this.loadDrDetails();
