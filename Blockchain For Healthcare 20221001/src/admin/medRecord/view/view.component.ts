@@ -50,10 +50,26 @@ export class MedRecordViewComponent implements OnInit {
   loadMedRecordDetails() {
     console.log(this.MedRecordIds);
     this.MedRecordDetails = []
+    
+    let dataList: any = []
+    let dataListLen: number = 0
+
     for (var i = 0; i <= this.MedRecordIds.length; i++) {
       if (this.MedRecordIds[i])
         this.medRecordService.getMedRecordDetails(this.MedRecordIds[i]).then((data: any) => {
-          this.MedRecordDetails.push(data)
+          //this.MedRecordDetails.push(data)
+          
+          //console.log(data);
+          const index = this.MedRecordIds.findIndex((element) => element == data.mrID)
+          console.log("Got Patient " + index);
+          dataList[index] = data
+          dataListLen++
+
+          if (dataListLen == this.MedRecordIds.length) {
+            for (var k = 0; k < dataList.length; k++) {
+              this.MedRecordDetails.push(dataList[k])
+            }
+          }
         });
     }
     this.progressMsg = ''
