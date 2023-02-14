@@ -1,13 +1,17 @@
 <div class="container-fluid">
   <div class="container mb-4">
-    <form [noValidate]="false" #docForm="ngForm" (ngSubmit)="onAddDocSubmit()">
+    <form [noValidate]="false" #docForm="ngForm" (ngSubmit)="onAddPatientSubmit()">
       <div class="row form-row">
         <div class="col-12">
           <div class="usr-image d-flex justify-content-center flex-column align-items-center mt-3 mb-5 object-fit">
             <img class="image rounded-circle" [src]=" image_url || '../../../assets/images/patient.png'" alt="user"
               width="150px">
             <div class="img-c mb-3 mt-3 col-md-6 d-flex flex-column">
+<<<<<<< Updated upstream
+              <label class="form-label text-center" for="formFile">Select Patient image</label>
+=======
               <label class="form-label text-center" for="formFile">Select image</label>
+>>>>>>> Stashed changes
               <input class="img-chooser form-control" type="file" id="formFile" (change)="PreviewImage($event)">
             </div>
           </div>
@@ -56,9 +60,15 @@
 
         <div class="col-12">
           <div class="form-group">
+<<<<<<< Updated upstream
+            <label>Patient Id<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <input [(ngModel)]="model.patID" name="patID" id="accid" type="text" class="form-control"
+              placeholder="patient account id" required />
+=======
             <label>Doctor ID<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
             <input [(ngModel)]="model.docID" name="docID" id="accid" type="text" class="form-control"
               placeholder="Doctor's account ID" required />
+>>>>>>> Stashed changes
           </div>
         </div>
         <div class="col-12 col-sm-6">
@@ -84,9 +94,9 @@
         </div>
       </div>
       <button type="submit" id="btn" class="btn btn-primary">
-        Add New Doctor</button>
+        Add Patient</button>
     </form>
   </div>
-  <app-progress_card [success]="success" [show]="show" [msg_text]="msg_text" [warn]="warn" (retry)="onAddDocSubmit()" (close)="onClose()">
+  <app-progress_card [success]="success" [show]="show" [msg_text]="msg_text" [warn]="warn" (retry)="onAddPatientSubmit()" (close)="onClose()">
   </app-progress_card>
 </div>
