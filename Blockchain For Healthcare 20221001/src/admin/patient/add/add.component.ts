@@ -11,14 +11,14 @@ import { PatientService } from 'src/admin/services/patient.service';
 export class PatientAddComponent implements OnInit {
   model: any = {
     patID: '',
-    fName: 'test_name',
-    lName: 'test_name',
+    fName: 'first_name',
+    lName: 'last_name',
     Doj: '',
-    emailID: 'test_name@mail.com',
-    phone: '123456789',
-    city: 'city',
-    state: 'state',
-    speciality: 'speciality',
+    emailID: 'test_name@gmail.com',
+    phone: '0107674088',
+    city: 'Eg: Butterworth',
+    state: 'Eg: Penang',
+    speciality: 'Eg: Cardiologist',
     imageHash: '',
   };
 
