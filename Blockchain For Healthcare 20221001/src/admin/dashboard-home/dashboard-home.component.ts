@@ -8,10 +8,10 @@ import { BlockchainService } from 'src/services/blockchain.service';
 })
 export class DashboardHomeComponent implements OnInit {
 
-  Titles: any = ['Total Patients','In Patients','Active Doctors','Active Nurses']
-  Images: any = ['user-injured','procedures','user-md','user-nurse']
+  Titles: any = ['In Patients','Active Doctors']
+  Images: any = ['procedures','user-md',]
   Count: number = 0
-  Background: any = ['green','orange','blue','violet']
+  Background: any = ['orange','blue',]
 
   accountBalance: any;
 
